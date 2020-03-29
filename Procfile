@@ -1,1 +1,1 @@
-"worker: ts-node --files src/index.ts"  
+worker: ts-node --files src/index.ts
