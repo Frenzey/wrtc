@@ -138,10 +138,10 @@ video::-webkit-media-controls-timeline-container{
 }
 
 .resizeable2 {
-    width: 60%;
+    width: 40%;
     height: 70%;
     max-height: 100%;
-    max-width: 60%;
+    max-width: 40%;
 }
 
 .resizeable2:hover {
