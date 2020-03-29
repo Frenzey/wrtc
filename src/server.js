@@ -7,7 +7,7 @@ var path= require("path");
 var Server = /** @class */ (function () {
     function Server() {
         this.activeSockets = [];
-        this.PORT = process.env.PORT || 4000;
+        this.PORT = 4000;
         this.initialize();
     }
     Server.prototype.initialize = function () {
