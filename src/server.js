@@ -80,7 +80,7 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.listen = function (callback) {
         var _this = this;
-        this.httpServer.listen(this.PORT, function () {
+        this.httpServer.listen(process.env.PORT || this.PORT, function () {
             callback(_this.PORT);
         });
     };
