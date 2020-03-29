@@ -7,7 +7,7 @@ var path= require("path");
 var Server = /** @class */ (function () {
     function Server() {
         this.activeSockets = [];
-        this.PORT = 4000;
+        this.PORT = process.env.PORT || 4000;
         this.initialize();
     }
     Server.prototype.initialize = function () {
@@ -23,7 +23,7 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.configureRoutes = function () {
         this.app.get("/", function (req, res) {
-            res.sendFile("index.html");
+            res.redirect("index.html");
         });
     };
     Server.prototype.handleSocketConnection = function () {
@@ -80,7 +80,7 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.listen = function (callback) {
         var _this = this;
-        this.httpServer.listen(process.env.PORT || this.PORT, function () {
+        this.httpServer.listen(this.PORT, function () {
             callback(_this.PORT);
         });
     };
