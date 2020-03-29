@@ -10,7 +10,7 @@ export class Server {
 
     private activeSockets: string[] = [];
 
-    private readonly DEFAULT_PORT = 3000;
+    private readonly PORT = 4000;
 
     constructor() {
         this.initialize();
@@ -76,6 +76,19 @@ export class Server {
                 });
             });
 
+            const user = {}
+            console.log("Un nouveau User est présent")
+            socket.on('send-chat-message', message => {
+                console.log(message)
+                socket.broadcast.emit('chat-message', { message: message, name: user[socket.id]})
+            })
+
+            socket.on('new-user', name => {
+                const idNumber = socket.id
+                user[socket.id] = name
+                socket.broadcast.emit('user-connected', {name: name, id: idNumber})
+            })
+
             socket.on("disconnect", () => {
                 this.activeSockets = this.activeSockets.filter(
                     existingSocket => existingSocket !== socket.id
@@ -83,13 +96,15 @@ export class Server {
                 socket.broadcast.emit("remove-user", {
                     socketId: socket.id
                 });
+                socket.broadcast.emit('user-disconnected', user[socket.id])
+                delete user[socket.id]
             });
         });
     }
 
     public listen(callback: (port: number) => void): void {
-        this.httpServer.listen(this.DEFAULT_PORT, () => {
-            callback(this.DEFAULT_PORT);
+        this.httpServer.listen(this.PORT, () => {
+            callback(this.PORT);
         });
     }
 }

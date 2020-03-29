@@ -7,6 +7,10 @@ const { RTCPeerConnection, RTCSessionDescription } = window;
 
 const peerConnection = new RTCPeerConnection();
 
+const messageForm = document.getElementById('send-container')
+const messageInput = document.getElementById('message-input')
+const messageContainer = document.getElementById('message-container')
+
 function unselectUsersFromList() {
     const alreadySelectedUser = document.querySelectorAll(
         ".active-user.active-user--selected"
@@ -33,7 +37,8 @@ function createUserItemContainer(socketId) {
         unselectUsersFromList();
         userContainerEl.setAttribute("class", "active-user active-user--selected");
         const talkingWithInfo = document.getElementById("talking-with-info");
-        talkingWithInfo.innerHTML = `Talking with: "Socket: ${socketId}"`;
+        const nameOfCandidate = document.getElementsByClassName("username")
+        talkingWithInfo.innerHTML = `Vous discutez avec: ` + nameOfCandidate[0].innerText;
         callUser(socketId);
     });
 
@@ -57,13 +62,12 @@ function updateUserList(socketIds) {
         const alreadyExistingUser = document.getElementById(socketId);
         if (!alreadyExistingUser) {
             const userContainerEl = createUserItemContainer(socketId);
-
             activeUserContainer.appendChild(userContainerEl);
         }
     });
 }
 
-const socket = io.connect("localhost:3000");
+const socket = io.connect("localhost:4000");
 
 socket.on("update-user-list", ({ users }) => {
     updateUserList(users);
@@ -71,7 +75,8 @@ socket.on("update-user-list", ({ users }) => {
 
 socket.on("remove-user", ({ socketId }) => {
     const elToRemove = document.getElementById(socketId);
-
+    const talkingWithInfo = document.getElementById("talking-with-info");
+    talkingWithInfo.innerHTML = `Vous êtes seul dans le chat vidéo...`;
     if (elToRemove) {
         elToRemove.remove();
     }
@@ -80,7 +85,7 @@ socket.on("remove-user", ({ socketId }) => {
 socket.on("call-made", async data => {
     if (getCalled) {
         const confirmed = confirm(
-            `User "Socket: ${data.socket}" wants to call you. Do accept this call?`
+            `L'utilisateur "Socket: ${data.socket}" souhaite discuter. Acceptez-vous cet appel?`
         );
 
         if (!confirmed) {
@@ -117,7 +122,7 @@ socket.on("answer-made", async data => {
 });
 
 socket.on("call-rejected", data => {
-    alert(`User: "Socket: ${data.socket}" rejected your call.`);
+    alert(`L'utilisateur: "Socket: ${data.socket}" refuse de discuter avec vous.`);
     unselectUsersFromList();
 });
 
@@ -143,29 +148,48 @@ navigator.getUserMedia(
     }
 );
 
-//_____draggable
-//_____________________________________________________
-/*const vid = document.querySelector(".local-video");
-vid.addEventListener('mousedown', mousedown);
-function mousedown(e){
-    window.addEventListener('mousemove', mousemove);
-    window.addEventListener('mouseup', mouseup);
-    let prevX = e.clientX;
-    let prevY = e.clientY;
-    function mousemove(e){
-        let newX = prevX - e.clientX;
-        let newY = prevY - e.clientY;
+/// CHAT______________________________
+///==============================================
+ socket.on('chat-message', data => {
+     console.log(data)
+     appendMessage(`${data.name}:  ${data.message}`)
+ })
 
-        const rect = vid.getBoundingClientRect();
+socket.on('user-connected', name => {
+    console.log(name.name + " vient de se connecter avec le socketID: " + name.id)
+    appendMessage(`${name.name} est connecté`)
+    const div = document.getElementById(name.id)
+    $(document).ready(function () {
+        $(div).find('p.username').text(name.name)
+    })
+})
 
-        vid.style.left = rect.left - newX + "px";
-        vid.style.top = rect.top - newY + "px";
+socket.on('user-disconnected', name =>{
+    appendMessage(`${name} est déconnecté`)
+})
 
-        prevX = e.clientX;
-        prevY = e.clientY;
-    }
-    function mouseup(){
-        window.removeEventListener("mousemove", mousemove);
-        window.removeEventListener("mouseup", mouseup);
-    }
-}*/
+messageForm.addEventListener('submit', e =>{
+    e.preventDefault()
+    const message = messageInput.value
+    appendMessage(`Vous: ${message}`)
+    socket.emit('send-chat-message', message)
+    messageInput.value = '';
+})
+
+function appendMessage(message){
+     const messageElement = document.createElement('div')
+    messageElement.innerText = message
+    messageContainer.append(messageElement)
+}
+
+$(document).ready(function(){
+   $("#pseudo-button").click(function () {
+       const name = prompt("Avez-vous un nom ?")
+       if (name != ''){
+           $(this).css("cursor", "not-allowed")
+           $(this).css("pointer-events", "none")
+           $(this).text('Vous êtes: '+ name)
+       }
+       socket.emit('new-user', name)
+   })
+});

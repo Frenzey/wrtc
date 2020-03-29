@@ -17,8 +17,9 @@
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <script>
         $(document).ready(function(){
+            const socket = io.connect("localhost:3000");
             $(".resizeable").draggable({containment: ".video-container"});
-            $(".remote-video").draggable({cursor: "crosshair", containment: ".video-container"});
+            $(".resizeable2").draggable({cursor: "crosshair", containment: ".video-container"});
             $(".resizeable").resizable();
         });
     </script>
@@ -36,13 +37,23 @@
     <div class="content-container">
         <div class="active-users-panel" id="active-user-container">
             <h3 class="panel-title">Utilisateurs actifs:</h3>
+            <div id="chat-container">
+                <form id="send-container">
+                    <div id="message-container"></div>
+                    <input id="message-input" type="text" autocomplete="off" />
+                    <button type="submit" id="send-button">SEND</button>
+                </form>
+            </div>
         </div>
         <div class="video-chat-container">
             <h2 class="talk-info" id="talking-with-info">
                 Choisissez un utilisateur actif dans le menu latéral de gauche
             </h2>
+            <button type="button" id="pseudo-button">Choisir un pseudo ?</button>
             <div class="video-container">
+                <div class="resizeable2">
                 <video autoplay class="remote-video" id="remote-video" controls></video>
+                </div>
                 <div class="resizeable">
                 <video autoplay muted class="local-video" id="local-video" controls controlsList="nopause nodownload"></video>
                 </div>

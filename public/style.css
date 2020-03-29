@@ -46,6 +46,7 @@ body {
     width: 300px;
     height: 100%;
     border-right: 1px solid #cddfe7;
+    overflow: scroll;
 }
 
 .panel-title {
@@ -89,8 +90,9 @@ body {
 
 .remote-video {
     border: 2px solid #cddfe7;
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 60%;
+    max-height: 60%;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -133,4 +135,165 @@ video::-webkit-media-controls-timeline-container{
 
 .resizeable:hover {
     cursor: grab;
+}
+
+.resizeable2 {
+    width: 60%;
+    height: 70%;
+    max-height: 100%;
+    max-width: 60%;
+}
+
+.resizeable2:hover {
+    cursor: crosshair;
+}
+
+.chat-container {
+    /*margin: 10px 0 0 0;
+    padding-left: 30px;
+    font-weight: 500;
+    font-size: 18px;
+    border-top: 1px solid #cddfe7;
+    padding-bottom: 10px;
+    bottom: 10px;*/
+    width: 100%;
+}
+
+form { border: 1px solid #cddfe7; position: fixed; bottom: 0; width: 300px; padding: 4px 0px 2px 0px}
+form input { border: 0px; border-radius: 3px; width: 72%; margin-right: 0.5%; margin-left: 1%; background: #cddfe7; height: 25px}
+form button { width: 71px; background: #e53359; border: none; border-radius: 5px; padding: 10px; font-size: 14px; font-weight: bold}
+
+#message-container {
+    height: 100px;
+    border-bottom: 0.5px solid #cddfe7;
+    margin-bottom: 0.5%;
+    overflow: scroll;
+}
+
+#pseudo-button {
+    width: 100px;
+    background: #cddfe7;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 11px;
+    font-weight: bold;
+    right: 3%;
+    top: 2%;
+    position: absolute;
+}
+
+
+
+
+@media only screen and (max-width: 420px) {
+
+    #pseudo-button {
+        width: 100px;
+        background: #cddfe7;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 11px;
+        font-weight: bold;
+        position: relative;
+    }
+
+    body {
+        height: 80%;
+    }
+
+    .video-chat-container {
+        padding: 0 20px;
+        flex: 1;
+        position: relative;
+    }
+
+    .active-users-panel {
+        width: 150px;
+        height: 80%;
+        border-right: 1px solid #cddfe7;
+        overflow: scroll;
+    }
+
+    form { border: 1px solid #cddfe7; position: fixed; bottom: 10%; width: 100%; padding: 4px 0px 2px 0px; background-color: white}
+    form input { border: 0px; border-radius: 3px; width: 80%; margin-right: 0.5%; margin-left: 1%; background: #cddfe7; height: 25px}
+    form button { width: 60px; background: #e53359; border: none; border-radius: 5px; padding: 10px; font-size: 11px; font-weight: bold}
+
+    #message-container {
+        height: 60px;
+        border-bottom: 0.5px solid #cddfe7;
+        margin-bottom: 0.5%;
+        overflow: scroll;
+    }
+
+    .local-video {
+        border: 1px solid #cddfe7;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .resizeable {
+        position: relative;
+        max-width: 200px;
+        width: 100px;
+        resize: none;
+        bottom: 0px;
+        right: 0%;
+        margin: 100% 0% 0% 15%;
+    }
+
+    .resizeable2 {
+        position: relative;
+        max-width: 200px;
+        width: 300px;
+        resize: none;
+        bottom: 0px;
+        right: 0%;
+        margin: 2% 0% 30% 0%;
+    }
+
+    .panel-title {
+        margin: 10px 0 0 0;
+        padding-left: 20px;
+        font-weight: 500;
+        font-size: 13px;
+        border-bottom: 1px solid #cddfe7;
+        padding-bottom: 10px;
+    }
+
+    .talk-info {
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    .active-user {
+        padding: 10px 7px 10px 7px;
+        border-bottom: 1px solid #cddfe7;
+        cursor: pointer;
+        user-select: none;
+        font-size: 11px;
+
+    }
+
+    .active-user--selected {
+        background-color: #fff;
+        border-right: 2px solid #65a9e5;
+        font-weight: 500;
+        transition: all 0.5s ease;
+        font-size: 11px;
+    }
+
+
+    .header > .logo-container > .logo-img {
+        width: 80px;
+        height: 45px;
+        margin-right: 10px;
+    }
+
+    .header > .logo-container > .logo-text {
+        font-size: 20px;
+        font-weight: 700;
+    }
 }
