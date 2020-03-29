@@ -126,8 +126,8 @@ video::-webkit-media-controls-timeline-container{
 
 .resizeable {
     position: absolute;
-    bottom: 60px;
-    right: -65%;
+    bottom: 40px;
+    right: -5%;
     max-width: 500px;
     width: 300px;
     min-width: 200px;
@@ -211,12 +211,12 @@ form button { width: 71px; background: #e53359; border: none; border-radius: 5px
 
     .active-users-panel {
         width: 150px;
-        height: 80%;
+        height: 100%;
         border-right: 1px solid #cddfe7;
         overflow: scroll;
     }
 
-    form { border: 1px solid #cddfe7; position: fixed; bottom: 10%; width: 100%; padding: 4px 0px 2px 0px; background-color: white}
+    form { border: 1px solid #cddfe7; position: fixed; bottom: 0%; width: 100%; padding: 4px 0px 2px 0px; background-color: white}
     form input { border: 0px; border-radius: 3px; width: 80%; margin-right: 0.5%; margin-left: 1%; background: #cddfe7; height: 25px}
     form button { width: 60px; background: #e53359; border: none; border-radius: 5px; padding: 10px; font-size: 11px; font-weight: bold}
 
@@ -239,8 +239,8 @@ form button { width: 71px; background: #e53359; border: none; border-radius: 5px
         max-width: 200px;
         width: 100px;
         resize: none;
-        bottom: 0px;
         right: 0%;
+        top: 90px;
         margin: 100% 0% 0% 15%;
     }
 
